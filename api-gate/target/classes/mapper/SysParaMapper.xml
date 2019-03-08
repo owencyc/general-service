@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cowenc.springboot.apigate.dao.SysParaMapper">
+
+<!-- 基础方法 根据id查询对象 start-->
+<select id="queryOne" parameterType="int" resultType="owenc.springboot.apigate.model.pojo.SysPara">
+	select * FROM sys_para where id=#{id}
+</select>
+<!-- 基础方法 根据id查询对象 end-->
+
+
+<!-- 基础方法 新增 start-->
+<!--<insert id="add" parameterType="cowenc.springboot.apigate.model.pojo.SysPara"-->
+	<!--useGeneratedKeys="true" keyProperty="id" keyColumn="id">-->
+	<!--<![CDATA[-->
+		<!--INSERT INTO sys_para (`create_date`,`is_deleted`,`user_id`,`role_id`) -->
+		<!--VALUES  (#{createDate},#{isDeleted},#{userId},#{roleId})-->
+	<!--]]>-->
+<!--</insert>-->
+<!-- 基础方法 新增 end-->
+
+
+<!-- 基础方法 修改/删除 start-->
+<!--<update id="update" parameterType="cowenc.springboot.apigate.model.pojo.SysPara">-->
+	<!--update sys_para set id = #{id}-->
+		<!--<if test="createDate != null">, `create_date` = #{createDate}</if>-->
+		<!--<if test="isDeleted != null">, `is_deleted` = #{isDeleted}</if>-->
+		<!--<if test="userId != null">, `user_id` = #{userId}</if>-->
+		<!--<if test="roleId != null">, `role_id` = #{roleId}</if>-->
+	<!--where id=#{id}-->
+<!--</update>-->
+<!-- 基础方法 修改/删除 end-->
+
+
+<!-- 基础方法 分页查询 start-->
+<sql id="queryBody">
+	<if test="id != null and id != ''">
+		and id=#{id}
+	</if>
+
+</sql>
+
+<select id="queryCount" parameterType="Map" resultType="Long">
+	select count(0) from sys_para where 1=1
+	<include refid="queryBody"/>
+</select>
+
+<select id="queryAll" resultType="SysPara" parameterType="Map">
+	select * from sys_para where 1=1
+	<include refid="queryBody"/>
+	<if test="rowIndex != null and rowIndex >= 0">
+		limit ${rowIndex},${pageSize}
+	</if>
+</select>
+<!-- 基础方法 分页查询 end-->
+
+</mapper>
